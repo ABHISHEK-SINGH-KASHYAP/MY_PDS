@@ -1,0 +1,69 @@
+{
+  "name": "pds",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.2",
+    "@radix-ui/react-separator": "^1.1.0",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-tooltip": "^1.1.4",
+    "@reduxjs/toolkit": "^2.3.0",
+    "axios": "^1.8.1",
+    "body-parser": "^1.20.3",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "cors": "^2.8.5",
+    "embla-carousel-react": "^8.3.1",
+    "express": "^4.21.2",
+    "framer-motion": "^12.4.3",
+    "lucide-react": "^0.456.0",
+    "react": "^18.3.1",
+    "react-datepicker": "^8.1.0",
+    "react-dom": "^18.3.1",
+    "react-redux": "^9.2.0",
+    "react-router": "^7.1.1",
+    "react-router-dom": "^6.30.0",
+    "react-slick": "^0.30.2",
+    "react-tsparticles": "^2.12.2",
+    "slick-carousel": "^1.8.1",
+    "styled-components": "^6.1.15",
+    "styles": "^0.2.1",
+    "tailwind-merge": "^2.5.4",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.13.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.14",
+    "globals": "^15.11.0",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "vite": "^5.4.11"
+  },
+  "description": "To make it easy for you to get started with GitLab, here's a list of recommended next steps.",
+  "main": "eslint.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/shasha9454/pds.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/shasha9454/pds/issues"
+  },
+  "homepage": "https://gitlab.com/shasha9454/pds#readme"
+}
