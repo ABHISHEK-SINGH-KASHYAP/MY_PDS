@@ -27,6 +27,7 @@ const FairpriceLogin = () => {
 
     return Object.keys(formErrors).length === 0;
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,12 +35,13 @@ const FairpriceLogin = () => {
       try {
         const response = await axios.post('http://localhost:5001/api/fairpriceshops/login', formData);
         setMessage(response.data.message);
-  navigate("/fair-price-shop-dashboard");
+        navigate("/fair-price-shop-dashboard");
+      } catch (error) {
+        setMessage(error.response.data.message);
+      }
     }
-    catch (error) {
-      setMessage(error.response.data.message);
-    }
-  }}
+  };
+
   return (
     <div
       style={{
@@ -48,8 +50,18 @@ const FairpriceLogin = () => {
         backgroundPosition: 'center',
         minHeight: '100vh',
       }}
-      className="flex items-center justify-center min-h-screen"
+      className="flex flex-col items-center justify-center min-h-screen relative"
     >
+      {/* I DID THIS HERE TEAM: Back button centered on top */}
+      <div className="absolute top-6 left-0 right-0 flex justify-center">
+        <button
+          onClick={() => navigate(-1)}
+          className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-900"
+        >
+          ← Back
+        </button>
+      </div>
+
       <div className="bg-transparent p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-3xl hover:bg-red-400 font-bold mb-6 text-center text-pink-700">FairpriceLogin</h2>
         <form onSubmit={handleSubmit} className="space-y-4">

@@ -62,8 +62,8 @@ export const loginBeneficiary = async (req, res) => {
     res.status(200).json({ 
       success: true, 
       message: "Login successful", 
-      token, 
-      beneficiary: { id: beneficiary._id, email: beneficiary.email, fullName: beneficiary.fullName } 
+      
+      beneficiary: { id: beneficiary._id, email: beneficiary.email, fullName: beneficiary.fullName, token:token,  } 
     });
   } catch (error) {
     res.status(500).json({ success: false, message: "Internal server error", error: error.message });

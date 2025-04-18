@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // I DID THIS HERE TEAM — added for navigation
 
 const MandisRegister = () => {
+  const navigate = useNavigate(); // I DID THIS HERE TEAM — for Back button
+
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -19,18 +22,21 @@ const MandisRegister = () => {
   };
 
   const validateForm = () => {
-    let formErrors = {};
-
+    const formErrors = {};
     if (!formData.fullName) formErrors.fullName = 'Full name is required';
     if (!formData.email) formErrors.email = 'Email is required';
     if (!formData.password) formErrors.password = 'Password is required';
-    if (!formData.mobileNumber) formErrors.mobileNumber = 'Mobile number is required';
-    else if (!/^\d{10}$/.test(formData.mobileNumber)) formErrors.mobileNumber = 'Invalid mobile number';
-    if (!formData.aadharNumber) formErrors.aadharNumber = 'Aadhar number is required';
-    else if (!/^\d{12}$/.test(formData.aadharNumber)) formErrors.aadharNumber = 'Invalid Aadhar number';
-
+    if (!formData.mobileNumber) {
+      formErrors.mobileNumber = 'Mobile number is required';
+    } else if (!/^\d{10}$/.test(formData.mobileNumber)) {
+      formErrors.mobileNumber = 'Invalid mobile number';
+    }
+    if (!formData.aadharNumber) {
+      formErrors.aadharNumber = 'Aadhar number is required';
+    } else if (!/^\d{12}$/.test(formData.aadharNumber)) {
+      formErrors.aadharNumber = 'Invalid Aadhar number';
+    }
     setErrors(formErrors);
-
     return Object.keys(formErrors).length === 0;
   };
 
@@ -41,7 +47,7 @@ const MandisRegister = () => {
         const response = await axios.post('http://localhost:5001/api/mandis/register', formData);
         setMessage(response.data.message);
       } catch (error) {
-        setMessage(error.response.data.message);
+        setMessage(error.response?.data?.message || 'An error occurred');
       }
     }
   };
@@ -57,76 +63,50 @@ const MandisRegister = () => {
       className="flex items-center justify-center min-h-screen"
     >
       <div className="bg-transparent p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-3xl hover:bg-red-400 font-bold mb-6 text-center text-pink-700">Register</h2>
+
+        {/* I DID THIS HERE TEAM — Back Button added at the top */}
+        <button
+          onClick={() => navigate(-1)}
+          className="mb-6 bg-gray-200 text-black px-4 py-2 rounded hover:bg-gray-300"
+        >
+          ← Back
+        </button>
+
+        <h2 className="text-3xl font-bold mb-6 text-center text-pink-700 hover:bg-red-400 rounded-md">Register</h2>
+
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-black-900 text-3xl font-bold bg-blue-400 w-fit">Full Name</label>
-            <input
-              type="text"
-              name="fullName"
-              value={formData.fullName}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 text-black"
-              placeholder="Enter your full name"
-            />
-            {errors.fullName && <p className="text-red-900 text-sm">{errors.fullName}</p>}
-          </div>
-          <div>
-            <label className="block text-black-900 text-3xl font-bold bg-blue-400 w-fit">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 text-black"
-              placeholder="Enter your email"
-            />
-            {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-          </div>
-          <div>
-            <label className="block text-black-900 text-3xl font-bold bg-blue-400 w-fit">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 text-black"
-              placeholder="Enter your password"
-            />
-            {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
-          </div>
-          <div>
-            <label className="block text-black-900 text-3xl font-bold bg-blue-400 w-fit">Mobile Number</label>
-            <input
-              type="text"
-              name="mobileNumber"
-              value={formData.mobileNumber}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 text-black"
-              placeholder="Enter your mobile number"
-            />
-            {errors.mobileNumber && <p className="text-red-500 text-sm">{errors.mobileNumber}</p>}
-          </div>
-          <div>
-            <label className="block text-black-900 text-3xl font-bold bg-blue-400 w-fit rounded-lg p-2">Aadhar Number</label>
-            <input
-              type="text"
-              name="aadharNumber"
-              value={formData.aadharNumber}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 text-black"
-              placeholder="Enter your Aadhar number"
-            />
-            {errors.aadharNumber && <p className="text-red-500 text-sm">{errors.aadharNumber}</p>}
-          </div>
+          {[
+            { label: 'Full Name', name: 'fullName', type: 'text' },
+            { label: 'Email', name: 'email', type: 'email' },
+            { label: 'Password', name: 'password', type: 'password' },
+            { label: 'Mobile Number', name: 'mobileNumber', type: 'text' },
+            { label: 'Aadhar Number', name: 'aadharNumber', type: 'text' },
+          ].map(({ label, name, type }) => (
+            <div key={name}>
+              <label className="block text-black text-xl font-semibold bg-blue-400 w-fit rounded p-1">
+                {label}
+              </label>
+              <input
+                type={type}
+                name={name}
+                value={formData[name]}
+                onChange={handleChange}
+                placeholder={`Enter your ${label.toLowerCase()}`}
+                className="w-full p-2 border border-gray-300 rounded mt-1 text-black"
+              />
+              {errors[name] && <p className="text-red-600 text-sm">{errors[name]}</p>}
+            </div>
+          ))}
+
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white text-2xl font-bold py-2 px-4 rounded"
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white text-xl font-bold py-2 px-4 rounded"
           >
-            MandiRegister
+            Register
           </button>
         </form>
-        {message && <p className="mt-4 text-center text-red-500">{message}</p>}
+
+        {message && <p className="mt-4 text-center text-red-500 font-semibold">{message}</p>}
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import axios from 'axios';
 
 const MandisLogin = () => {
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -24,7 +25,6 @@ const MandisLogin = () => {
     if (!formData.password) formErrors.password = 'Password is required';
 
     setErrors(formErrors);
-
     return Object.keys(formErrors).length === 0;
   };
 
@@ -34,12 +34,13 @@ const MandisLogin = () => {
       try {
         const response = await axios.post('http://localhost:5001/api/mandis/login', formData);
         setMessage(response.data.message);
-  navigate('/mandis-dashboard');
+        navigate('/mandis-dashboard');
+      } catch (error) {
+        setMessage(error.response?.data?.message || 'An error occurred');
+      }
     }
-    catch (error) {
-      setMessage(error.response.data.message);
-    }
-  }}
+  };
+
   return (
     <div
       style={{
@@ -51,7 +52,17 @@ const MandisLogin = () => {
       className="flex items-center justify-center min-h-screen"
     >
       <div className="bg-transparent p-8 rounded-lg shadow-lg w-full max-w-md">
+        
+        {/* I DID THIS HERE TEAM — Back Button */}
+        <button
+          onClick={() => navigate(-1)}
+          className="mb-6 bg-gray-200 text-black px-4 py-2 rounded hover:bg-gray-300"
+        >
+          ← Back
+        </button>
+
         <h2 className="text-3xl hover:bg-red-400 font-bold mb-6 text-center text-pink-700">MandisLogin</h2>
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-black-800 bg-blue-500 w-fit text-2xl font-bold">Email</label>
@@ -84,6 +95,7 @@ const MandisLogin = () => {
             MandisLogin
           </button>
         </form>
+
         {message && <p className="mt-4 text-center text-red-500">{message}</p>}
       </div>
     </div>

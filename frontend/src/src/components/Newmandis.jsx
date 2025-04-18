@@ -1,75 +1,49 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // I DID THIS HERE TEAM
 import { motion } from 'framer-motion';
-import '/src/App.css'; 
+import '/src/App.css';
 
 const NewMandis = () => {
+  const navigate = useNavigate(); // I DID THIS HERE TEAM
   const [bgColor, setBgColor] = useState('bg-gradient-to-r from-blue-500 to-green-500');
 
   const [farmers, setFarmers] = useState([
-    {
-      id: 1, 
-      name: "Farmer 1",
-      location: "Village A",
-      crop: "Wheat",
-      price: "₹2000/ton",
-      status: "Pending", 
-    },
-    {
-      id: 2,
-      name: "Farmer 2",
-      location: "Village B",
-      crop: "Rice",
-      price: "₹2500/ton",
-      status: "Pending",
-    },
+    { id: 1, name: "Farmer 1", location: "Village A", crop: "Wheat", price: "₹2000/ton", status: "Pending" },
+    { id: 2, name: "Farmer 2", location: "Village B", crop: "Rice", price: "₹2500/ton", status: "Pending" },
+    { id: 3, name: "Farmer 3", location: "Village C", crop: "Corn", price: "₹1800/ton", status: "Pending" }, // I DID THIS HERE TEAM
+    { id: 4, name: "Farmer 4", location: "Village D", crop: "Barley", price: "₹2100/ton", status: "Pending" }, // I DID THIS HERE TEAM
+    { id: 5, name: "Farmer 5", location: "Village E", crop: "Sugarcane", price: "₹1900/ton", status: "Pending" }, // I DID THIS HERE TEAM
+    { id: 6, name: "Farmer 6", location: "Village F", crop: "Soybean", price: "₹2300/ton", status: "Pending" }, // I DID THIS HERE TEAM
+    { id: 7, name: "Farmer 7", location: "Village G", crop: "Cotton", price: "₹2700/ton", status: "Pending" }, // I DID THIS HERE TEAM
   ]);
 
   const [warehouses] = useState([
-    {
-      id: 1,
-      name: "Warehouse 1",
-      location: "City X",
-      capacity: "500 tons",
-    },
-    {
-      id: 2,
-      name: "Warehouse 2",
-      location: "City Y",
-      capacity: "700 tons",
-    },
-    {
-      id: 3,
-      name: "Warehouse 3",
-      location: "City X",
-      capacity: "300 tons",
-    },
+    { id: 1, name: "Warehouse 1", location: "City X", capacity: "500 tons" },
+    { id: 2, name: "Warehouse 2", location: "City Y", capacity: "700 tons" },
+    { id: 3, name: "Warehouse 3", location: "City X", capacity: "300 tons" },
+    { id: 4, name: "Warehouse 4", location: "City Z", capacity: "600 tons" }, // I DID THIS HERE TEAM
+    { id: 5, name: "Warehouse 5", location: "City W", capacity: "800 tons" }, // I DID THIS HERE TEAM
+    { id: 6, name: "Warehouse 6", location: "City Y", capacity: "400 tons" }, // I DID THIS HERE TEAM
+    { id: 7, name: "Warehouse 7", location: "City X", capacity: "550 tons" }, // I DID THIS HERE TEAM
   ]);
-
-  const [mandies, setMandies] = useState([                  
-    {
-      id: 1,
-      name: "Mandi 1",
-      location: "City X",
-      totalStorageCapacity: "1000 tons",
-      currentAvailableStorage: "500 tons",
-    },
-    {
-      id: 2,
-      name: "Mandi 2",
-      location: "City Y",
-      totalStorageCapacity: "1500 tons",
-      currentAvailableStorage: "800 tons",
-    },
+  
+  const [mandies, setMandies] = useState([
+    { id: 1, name: "Mandi 1", location: "City X", totalStorageCapacity: "1000 tons", currentAvailableStorage: "500 tons" },
+    { id: 2, name: "Mandi 2", location: "City Y", totalStorageCapacity: "1500 tons", currentAvailableStorage: "800 tons" },
+    { id: 3, name: "Mandi 3", location: "City Z", totalStorageCapacity: "900 tons", currentAvailableStorage: "450 tons" }, // I DID THIS HERE TEAM
+    { id: 4, name: "Mandi 4", location: "City W", totalStorageCapacity: "1200 tons", currentAvailableStorage: "650 tons" }, // I DID THIS HERE TEAM
+    { id: 5, name: "Mandi 5", location: "City Y", totalStorageCapacity: "1800 tons", currentAvailableStorage: "1300 tons" }, // I DID THIS HERE TEAM
+    { id: 6, name: "Mandi 6", location: "City X", totalStorageCapacity: "1100 tons", currentAvailableStorage: "600 tons" }, // I DID THIS HERE TEAM
+    { id: 7, name: "Mandi 7", location: "City V", totalStorageCapacity: "950 tons", currentAvailableStorage: "400 tons" }, // I DID THIS HERE TEAM
   ]);
+  
 
   const [searchCity, setSearchCity] = useState("");
 
   const handleRequest = (farmerId, action) => {
     setFarmers((prevFarmers) =>
       prevFarmers.map((farmer) =>
-        farmer.id === farmerId
-          ? { ...farmer, status: action }
-          : farmer
+        farmer.id === farmerId ? { ...farmer, status: action } : farmer
       )
     );
   };
@@ -77,9 +51,7 @@ const NewMandis = () => {
   const updateMandiStorage = (mandiId, newStorage) => {
     setMandies((prevMandies) =>
       prevMandies.map((mandi) =>
-        mandi.id === mandiId
-          ? { ...mandi, currentAvailableStorage: newStorage }
-          : mandi
+        mandi.id === mandiId ? { ...mandi, currentAvailableStorage: newStorage } : mandi
       )
     );
   };
@@ -98,16 +70,21 @@ const NewMandis = () => {
     visible: { x: 0, opacity: 1, transition: { duration: 0.5 } },
   };
 
-  const hoverEffect = {
-    hover: { scale: 1.05, transition: { duration: 0.2 } },
-  };
-
   const changeBackground = (color) => {
     setBgColor(color);
   };
 
   return (
     <div className={`p-5 font-sans ${bgColor} min-h-screen`}>
+      
+      {/* BACK BUTTON */}
+      <button
+        onClick={() => navigate(-1)} // I DID THIS HERE TEAM
+        className="mb-4 bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-600"
+      >
+        ← Back
+      </button>
+
       <motion.h1
         className="text-3xl font-bold mb-5"
         initial="hidden"
@@ -117,6 +94,7 @@ const NewMandis = () => {
         Mandi Admin Dashboard
       </motion.h1>
 
+      {/* Color Theme Buttons */}
       <div className="mb-4">
         <button
           onClick={() => changeBackground('bg-gradient-to-r from-blue-500 to-green-500')}
@@ -132,12 +110,8 @@ const NewMandis = () => {
         </button>
       </div>
 
-      <motion.div
-        className="mb-8"
-        initial="hidden"
-        animate="visible"
-        variants={slideIn}
-      >
+      {/* Farmers Table */}
+      <motion.div className="mb-8" initial="hidden" animate="visible" variants={slideIn}>
         <h2 className="text-2xl font-semibold mb-4">Farmers' Requests</h2>
         <table className="w-full border-collapse">
           <thead>
@@ -152,11 +126,7 @@ const NewMandis = () => {
           </thead>
           <tbody>
             {farmers.map((farmer) => (
-              <motion.tr
-                key={farmer.id}
-                className="border"
-                whileHover={{ backgroundColor: "#f0f0f0" }}
-              >
+              <motion.tr key={farmer.id} className="border" whileHover={{ backgroundColor: "#f0f0f0" }}>
                 <td className="p-3 border">{farmer.name}</td>
                 <td className="p-3 border">{farmer.location}</td>
                 <td className="p-3 border">{farmer.crop}</td>
@@ -188,12 +158,8 @@ const NewMandis = () => {
         </table>
       </motion.div>
 
-      <motion.div
-        className="mb-8"
-        initial="hidden"
-        animate="visible"
-        variants={slideIn}
-      >
+      {/* Warehouses */}
+      <motion.div className="mb-8" initial="hidden" animate="visible" variants={slideIn}>
         <h2 className="text-2xl font-semibold mb-4">Nearby Warehouses</h2>
         <motion.input
           type="text"
@@ -213,11 +179,7 @@ const NewMandis = () => {
           </thead>
           <tbody>
             {filteredWarehouses.map((warehouse) => (
-              <motion.tr
-                key={warehouse.id}
-                className="border"
-                whileHover={{ backgroundColor: "#f0f0f0" }}
-              >
+              <motion.tr key={warehouse.id} className="border" whileHover={{ backgroundColor: "#f0f0f0" }}>
                 <td className="p-3 border">{warehouse.name}</td>
                 <td className="p-3 border">{warehouse.location}</td>
                 <td className="p-3 border">{warehouse.capacity}</td>
@@ -227,11 +189,8 @@ const NewMandis = () => {
         </table>
       </motion.div>
 
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={slideIn}
-      >
+      {/* Mandis */}
+      <motion.div initial="hidden" animate="visible" variants={slideIn}>
         <h2 className="text-2xl font-semibold mb-4">Nearby Mandies</h2>
         <table className="w-full border-collapse">
           <thead>
@@ -245,11 +204,7 @@ const NewMandis = () => {
           </thead>
           <tbody>
             {mandies.map((mandi) => (
-              <motion.tr
-                key={mandi.id}
-                className="border"
-                whileHover={{ backgroundColor: "#f0f0f0" }}
-              >
+              <motion.tr key={mandi.id} className="border" whileHover={{ backgroundColor: "#f0f0f0" }}>
                 <td className="p-3 border">{mandi.name}</td>
                 <td className="p-3 border">{mandi.location}</td>
                 <td className="p-3 border">{mandi.totalStorageCapacity}</td>
@@ -259,9 +214,7 @@ const NewMandis = () => {
                     type="text"
                     placeholder="Update storage"
                     className="p-1 border rounded"
-                    onBlur={(e) =>
-                      updateMandiStorage(mandi.id, e.target.value)
-                    }
+                    onBlur={(e) => updateMandiStorage(mandi.id, e.target.value)}
                     whileHover={{ scale: 1.02 }}
                   />
                 </td>

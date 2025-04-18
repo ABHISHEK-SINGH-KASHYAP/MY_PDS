@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const FairpriceRegister = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -30,7 +32,6 @@ const FairpriceRegister = () => {
     else if (!/^\d{12}$/.test(formData.aadharNumber)) formErrors.aadharNumber = 'Invalid Aadhar number';
 
     setErrors(formErrors);
-
     return Object.keys(formErrors).length === 0;
   };
 
@@ -41,7 +42,7 @@ const FairpriceRegister = () => {
         const response = await axios.post('http://localhost:5001/api/fairpriceshops/register', formData);
         setMessage(response.data.message);
       } catch (error) {
-        setMessage(error.response.data.message);
+        setMessage(error.response?.data?.message || "Something went wrong");
       }
     }
   };
@@ -54,79 +55,51 @@ const FairpriceRegister = () => {
         backgroundPosition: 'center',
         minHeight: '100vh',
       }}
-      className="flex items-center justify-center min-h-screen"
+      className="flex items-center justify-center"
     >
-      <div className="bg-transparent p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-3xl hover:bg-red-400 font-bold mb-6 text-center text-pink-700">Register</h2>
+      <div className="bg-white/20 backdrop-blur-md p-8 rounded-xl shadow-md w-full max-w-md relative text-white">
+        {/* Back Button */}
+        <div className="absolute -top-10 left-1/2 transform -translate-x-1/2">
+          <button
+            onClick={() => navigate(-1)}
+            className="bg-gray-800/80 hover:bg-gray-900 text-white px-4 py-2 rounded-full shadow"
+          >
+            ← Back
+          </button>
+        </div>
+
+        <h2 className="text-3xl font-bold mb-6 text-center text-yellow-300">Fair Price Shop Registration</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-black-900 text-3xl font-bold bg-blue-400 w-fit">Full Name</label>
-            <input
-              type="text"
-              name="fullName"
-              value={formData.fullName}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 text-black"
-              placeholder="Enter your full name"
-            />
-            {errors.fullName && <p className="text-red-900 text-sm">{errors.fullName}</p>}
-          </div>
-          <div>
-            <label className="block text-black-900 text-3xl font-bold bg-blue-400 w-fit">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 text-black"
-              placeholder="Enter your email"
-            />
-            {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-          </div>
-          <div>
-            <label className="block text-black-900 text-3xl font-bold bg-blue-400 w-fit">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 text-black"
-              placeholder="Enter your password"
-            />
-            {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
-          </div>
-          <div>
-            <label className="block text-black-900 text-3xl font-bold bg-blue-400 w-fit">Mobile Number</label>
-            <input
-              type="text"
-              name="mobileNumber"
-              value={formData.mobileNumber}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 text-black"
-              placeholder="Enter your mobile number"
-            />
-            {errors.mobileNumber && <p className="text-red-500 text-sm">{errors.mobileNumber}</p>}
-          </div>
-          <div>
-            <label className="block text-black-900 text-3xl font-bold bg-blue-400 w-fit rounded-lg p-2">Aadhar Number</label>
-            <input
-              type="text"
-              name="aadharNumber"
-              value={formData.aadharNumber}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded mt-1 text-black"
-              placeholder="Enter your Aadhar number"
-            />
-            {errors.aadharNumber && <p className="text-red-500 text-sm">{errors.aadharNumber}</p>}
-          </div>
+          {[
+            { name: "fullName", label: "Full Name", type: "text", placeholder: "Enter your full name" },
+            { name: "email", label: "Email", type: "email", placeholder: "Enter your email" },
+            { name: "password", label: "Password", type: "password", placeholder: "Enter your password" },
+            { name: "mobileNumber", label: "Mobile Number", type: "text", placeholder: "Enter your mobile number" },
+            { name: "aadharNumber", label: "Aadhar Number", type: "text", placeholder: "Enter your Aadhar number" },
+          ].map(({ name, label, type, placeholder }) => (
+            <div key={name}>
+              <label className="block text-md font-semibold text-white mb-1">{label}</label>
+              <input
+                type={type}
+                name={name}
+                value={formData[name]}
+                onChange={handleChange}
+                className="w-full p-2 border border-white/40 bg-white/10 rounded text-white placeholder-white/70"
+                placeholder={placeholder}
+              />
+              {errors[name] && <p className="text-red-300 text-sm mt-1">{errors[name]}</p>}
+            </div>
+          ))}
+
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white text-2xl font-bold py-2 px-4 rounded"
+            className="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 rounded"
           >
-            FairpriceRegister
+            Register
           </button>
         </form>
-        {message && <p className="mt-4 text-center text-red-500">{message}</p>}
+
+        {message && <p className="mt-4 text-center text-pink-200 font-medium">{message}</p>}
       </div>
     </div>
   );
