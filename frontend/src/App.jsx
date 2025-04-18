@@ -12,10 +12,7 @@ import Login from './src/Auth/Login';
 import Register from './src/Auth/Register.jsx';
 import Home from './src/components/Home';
 import GrainMarket from './src/components/GrainMarket.jsx';
-
 import BeneAuth from './src/AuthUser/BeneAuth';
-
-
 import NewMandis from './src/components/Newmandis';
 import WarehouseDashboard from './src/components/WarehouseDashboard';
 import FarmerDashboard from './src/components/FarmerDashboard';
@@ -24,11 +21,11 @@ import MandisLogin from './src/Auth/MandisLogin.jsx';
 import WarehouseRegister from './src/Auth/WarehouseRegister';
 import WarehouseLogin from './src/Auth/WarehouseLogin';
 import FairpriceRegister from './src/Auth/FairpriceshopsRegister';
-import FairpriceLogin from './src/Auth/FairpriceshopsLogin';
+import FairpriceLogin from './src/Auth/FairpriceshopsLogin.jsx';
 import FairPriceShopDashboard from './src/components/FairPriceShopsDashboard.jsx';
 import Beneficiary from './src/components/Beneficiary';
 import BeneficiaryRegister from './src/Auth/BeneficiaryRegister';
-import BeneficiaryLogin from './src/Auth/BeneficiaryLogin';
+import BeneficiaryLogin from './src/Auth/BeneficiaryLogin.jsx';
 import BeneficiaryDashboard from './src/components/BeneficiaryDashboard';
 
 const router = createBrowserRouter([
@@ -101,7 +98,7 @@ const router = createBrowserRouter([
     element:<Register/>
   },
   {
-    path:"contract-path",
+    path:"/contract-path",
     element:<GrainMarket/>
 
   }, 
